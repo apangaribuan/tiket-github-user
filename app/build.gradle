@@ -1,0 +1,57 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    def globalConfiguration = rootProject.extensions.getByName("ext")
+
+    compileSdkVersion globalConfiguration["compileSdkVersion"]
+    buildToolsVersion globalConfiguration["buildToolsVersion"]
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    defaultConfig {
+        applicationId "com.tiket.githubuser"
+        minSdkVersion globalConfiguration["minSdkVersion"]
+        targetSdkVersion globalConfiguration["targetSdkVersion"]
+        versionCode globalConfiguration["versionCode"]
+        versionName globalConfiguration["versionName"]
+
+        testInstrumentationRunner globalConfiguration["testInstrumentationRunner"]
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+
+    implementation appDependencies.coroutines
+    implementation appDependencies.coroutinesAndroid
+    implementation appDependencies.kotlin
+    implementation appDependencies.ktxCore
+    implementation appDependencies.coroutinesCoreCommon
+    implementation appDependencies.ktorClient
+    implementation appDependencies.ktorCientAndroid
+
+    implementation appDependencies.appCompat
+    implementation appDependencies.constraintLayout
+    implementation appDependencies.recyclerView
+
+    implementation appDependencies.okhttp
+    implementation appDependencies.gson
+    implementation appDependencies.glide
+    implementation appDependencies.glideCompiler
+
+    testImplementation appTestDependencies.jUnit
+    androidTestImplementation appTestDependencies.jUnitX
+    androidTestImplementation appTestDependencies.espressoCore
+}
